@@ -1,0 +1,56 @@
+name: Claude Issue Triage
+
+on:
+  issues:
+    types: [opened, edited]
+
+concurrency:
+  group: issue-triage-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  triage-issue:
+    # Evita duplicar trabajo con claude.yml (que ya responde a menciones de
+    # @claude) y evita que el bot se dispare a sí mismo.
+    if: |
+      !contains(github.event.issue.body, '@claude') &&
+      !contains(github.event.issue.title, '@claude') &&
+      github.event.sender.type != 'Bot'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Sync issue labels
+        run: bash scripts/sync-labels.sh
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Run Claude Code for Issue Triage
+        id: claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+
+          # Necesario para que el triage funcione también con issues abiertos
+          # por gente sin permiso de escritura en el repo.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          allowed_non_write_users: "*"
+
+          prompt: "/triage-issue REPO: ${{ github.repository }} ISSUE_NUMBER: ${{ github.event.issue.number }}"
+
+          # Allowlist estrecha: Claude solo puede leer código, listar/ver
+          # issues y escribir a través de los dos scripts que atan la acción
+          # al issue del evento (nunca gh issue edit/comment genérico).
+          claude_args: |
+            --max-turns 15
+            --allowedTools "Read,Glob,Grep,Write,Bash(gh label list:*),Bash(gh issue view:*),Bash(gh search issues:*),Bash(bash scripts/edit-issue-labels.sh:*),Bash(bash scripts/upsert-triage-comment.sh:*)"
+        env:
+          GH_TOKEN: ${{ github.token }}

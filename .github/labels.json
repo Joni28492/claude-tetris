@@ -1,0 +1,92 @@
+[
+  {
+    "name": "type:bug",
+    "color": "d73a4a",
+    "description": "Algo no funciona como se espera (comportamiento incorrecto o crash)"
+  },
+  {
+    "name": "type:feature",
+    "color": "a2eeef",
+    "description": "Petición de una funcionalidad nueva que hoy no existe"
+  },
+  {
+    "name": "type:enhancement",
+    "color": "84b6eb",
+    "description": "Mejora de algo que ya existe y funciona (rendimiento, UX, ajuste fino)"
+  },
+  {
+    "name": "type:docs",
+    "color": "0075ca",
+    "description": "Cambios en documentación (README, CLAUDE.md, comentarios)"
+  },
+  {
+    "name": "type:question",
+    "color": "d876e3",
+    "description": "Pregunta o duda que no describe un bug ni una petición concreta"
+  },
+  {
+    "name": "area:gameplay",
+    "color": "5319e7",
+    "description": "loop() de juego, gravedad/dropAccum, spawn(), lockPiece(), fin de partida"
+  },
+  {
+    "name": "area:collision",
+    "color": "5319e7",
+    "description": "collide(), tryRotate(), rotateCW(), wall kicks"
+  },
+  {
+    "name": "area:controls",
+    "color": "5319e7",
+    "description": "Listener de keydown, movimiento, soft/hard drop, togglePause()"
+  },
+  {
+    "name": "area:scoring",
+    "color": "5319e7",
+    "description": "LINE_SCORES, clearLines(), nivel, dropInterval"
+  },
+  {
+    "name": "area:rendering",
+    "color": "5319e7",
+    "description": "draw(), ghostY(), drawNext(), canvas del tablero y de la pieza siguiente"
+  },
+  {
+    "name": "area:ui",
+    "color": "5319e7",
+    "description": "index.html, style.css, HUD, overlay de pausa/game over"
+  },
+  {
+    "name": "area:build",
+    "color": "5319e7",
+    "description": "Workflows de GitHub Actions, scripts del repo, herramientas de desarrollo"
+  },
+  {
+    "name": "prio:P1",
+    "color": "b60205",
+    "description": "Bloquea el juego: no se puede jugar o se rompe la partida"
+  },
+  {
+    "name": "prio:P2",
+    "color": "e99695",
+    "description": "Degrada la experiencia de juego sin bloquearla por completo"
+  },
+  {
+    "name": "prio:P3",
+    "color": "f9d0c4",
+    "description": "Problema menor, cosmético o de bajo impacto"
+  },
+  {
+    "name": "needs-info",
+    "color": "fbca04",
+    "description": "Falta información del reportante para completar el diagnóstico"
+  },
+  {
+    "name": "triaged",
+    "color": "0e8a16",
+    "description": "Ya analizado por el workflow de triage automático de Claude"
+  },
+  {
+    "name": "duplicate",
+    "color": "cfd3d7",
+    "description": "Ya reportado en otro issue abierto"
+  }
+]
